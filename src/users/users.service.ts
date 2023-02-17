@@ -25,6 +25,14 @@ export class UsersService {
     return this.userRepository.findOneByOrFail({ id });
   }
 
+  findByUsername(username: string): Promise<User> {
+    return this.userRepository.findOneByOrFail({ username });
+  }
+
+  existsUsername(username: string): Promise<boolean> {
+    return this.userRepository.exist({ where: { username } });
+  }
+
   update(id: string, updateUserDto: UpdateUserDto): Promise<UpdateResult> {
     return this.userRepository.update({ id }, updateUserDto);
   }

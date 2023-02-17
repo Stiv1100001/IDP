@@ -11,4 +11,8 @@ export default () => ({
     password: process.env.DATABASE_PASSWORD,
     synchronize: process.env.DATABASE_SYNCHRONIZE || false,
   },
+  jwt: {
+    secret: process.env.JWT_SECRET,
+    refresh_secret: process.env.JWT_REFRESH_SECRET,
+  },
 });
