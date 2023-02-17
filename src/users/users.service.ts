@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, Repository, UpdateResult } from 'typeorm';
+import { Repository, UpdateResult } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
@@ -17,8 +17,9 @@ export class UsersService {
     return this.userRepository.save(user);
   }
 
-  findAll(): Promise<User[]> {
-    return this.userRepository.find();
+  findAll(trashed = false): Promise<User[]> {
+    if (trashed) return this.userRepository.find({ withDeleted: true });
+    else return this.userRepository.find();
   }
 
   findOne(id: string): Promise<User> {
@@ -37,11 +38,22 @@ export class UsersService {
     return this.userRepository.update({ id }, updateUserDto);
   }
 
-  remove(id: string): Promise<UpdateResult> {
-    return this.userRepository.softDelete({ id });
+  async remove(id: string): Promise<boolean> {
+    const result: UpdateResult = await this.userRepository.softDelete({
+      id,
+      deletedAt: undefined,
+    });
+
+    if (result.affected == 0) throw new NotFoundException('User not found');
+
+    return true;
   }
 
-  removePermanently(id: string): Promise<DeleteResult> {
-    return this.userRepository.delete({ id });
+  async removePermanently(id: string): Promise<boolean> {
+    const result = await this.userRepository.delete({ id });
+
+    if (result.affected == 0) throw new NotFoundException('User not found');
+
+    return true;
   }
 }

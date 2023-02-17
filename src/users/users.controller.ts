@@ -1,15 +1,14 @@
 import {
   Controller,
   Get,
-  Post,
   Body,
   Patch,
   Param,
   Delete,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { AccessTokenGuard } from '../common/guards/access-token.guard';
 
@@ -17,14 +16,9 @@ import { AccessTokenGuard } from '../common/guards/access-token.guard';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
-  }
-
   @Get()
-  findAll() {
-    return this.usersService.findAll();
+  findAll(@Query('trashed') trashed: boolean) {
+    return this.usersService.findAll(trashed);
   }
 
   @Get(':id')

@@ -1,6 +1,11 @@
 import { JwtPayload } from './jwt-payload.type';
 
-export interface IDPRequest extends Request {
-  user: JwtPayload;
+interface UserJwtPayload extends JwtPayload {
+  iat: number;
+  exp: number;
   refreshToken: string;
+}
+
+export interface IDPRequest extends Request {
+  user: UserJwtPayload;
 }

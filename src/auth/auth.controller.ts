@@ -20,11 +20,11 @@ export class AuthController {
     return this.authService.signIn(data);
   }
 
-  @UseGuards(RefreshTokenGuard)
   @Get('refresh')
+  @UseGuards(RefreshTokenGuard)
   refreshTokens(@Req() req: IDPRequest) {
     const userId = req.user.sub;
-    const refreshToken = req.refreshToken;
+    const refreshToken = req.user.refreshToken;
     return this.authService.refreshTokens(userId, refreshToken);
   }
 
