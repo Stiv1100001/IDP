@@ -48,4 +48,4 @@ $ npm run test:cov
 
 ## License
 
-sIDP is [GNU GPLv3](LICENSE).
+sIDP is under [GNU GPLv3](LICENSE) license.
