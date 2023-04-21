@@ -3,7 +3,7 @@
 ###################
 
 FROM node:18 As build
-RUN corepack prepare pnpm@7.27.0 --activate 
+RUN corepack prepare pnpm@latest --activate 
 
 WORKDIR /usr/src/app
 

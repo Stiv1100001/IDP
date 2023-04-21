@@ -1,7 +1,7 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/javascript-node-postgres
 {
-  "name": "IDP",
+  "name": "sIDP",
   "dockerComposeFile": "docker-compose.yml",
   "service": "app",
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
@@ -17,7 +17,7 @@
   "forwardPorts": [3000, 5432],
 
   // Use 'postCreateCommand' to run commands after the container is created.
-  "postCreateCommand": "pnpm install",
+  "postCreateCommand": "corepack pnpm install",
   "customizations": {
     "vscode": {
       "extensions": [
